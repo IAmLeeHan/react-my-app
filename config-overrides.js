@@ -8,16 +8,18 @@
 const {
   override,
   addLessLoader, // less配置函数
-  addBabelPlugins // babel插件配置函数
+  fixBabelImports
 } = require('customize-cra')
 
+const modifyVars = require('./lessVars')
 
-module.exports = override(    
-  addLessLoader(),
-  ...addBabelPlugins( // 支持装饰器
-    [
-      '@babel/plugin-proposal-decorators',
-      { legacy: true}
-    ]
-  )
+module.exports = override(
+  addLessLoader({
+    javascriptEnabled: true,
+    modifyVars
+  }),
+  fixBabelImports('antd', {
+    libraryDirectory: 'es',
+    style: true,
+  }),
 );
