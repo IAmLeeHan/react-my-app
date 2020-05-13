@@ -5,6 +5,19 @@
  */
 
 //  从customize-cra引入一些相关的方法
-const { override } = require('customize-cra')
+const {
+  override,
+  addLessLoader, // less配置函数
+  addBabelPlugins // babel插件配置函数
+} = require('customize-cra')
 
-module.exports = override()
+
+module.exports = override(    
+  addLessLoader(),
+  ...addBabelPlugins( // 支持装饰器
+    [
+      '@babel/plugin-proposal-decorators',
+      { legacy: true}
+    ]
+  )
+);
